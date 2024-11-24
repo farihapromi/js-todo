@@ -4,39 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Simple Todo App</title>
 </head>
 <body>
-    <div>
-        <h1>Simple Todo</h1>
-        <input type="text" name="" id="inputField">
-        <button class="btn">Click Me</button>
-        <div class="todoListsElem">
-          
-
+    <div class="todo-app">
+        <h1>Todo App</h1>
+        <div>
+            <input type="text" id="todo-input" placeholder="Add a task..." />
+            <button id="add-btn">Add</button>
         </div>
+        <ul id="todo-list"></ul>
     </div>
+
     <script>
-        let inputelement=document.getElementById('inputField')
-        let todoFirst=document.getElementById('todoFirst')
-        let clickBtn=document.querySelector('.btn')
-        let todoElem=document.querySelector('.todoListsElem')
+        const input = document.getElementById('todo-input');
+        const addButton = document.getElementById('add-btn');
+        const todoList = document.getElementById('todo-list');
 
-        const addTodo=()=>{
-           console.log( inputelement.value
-           )
-          let createElementP=document.createElement('p')
-          createElementP.innerText=inputelement.value;
-          console.log(createElementP)
-          todoElem.append(createElementP);
-          inputelement.value=" "
+        const addTask = () => {
+            const taskText = input.value.trim();
+            if (!taskText) {
+                alert('Please enter a task!');
+                return;
+            }
 
-        }
-      
-       clickBtn.addEventListener('click',()=>{
-        addTodo();
-       })
+            const listItem = document.createElement('li');
+            listItem.textContent = taskText;
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', () => {
+                listItem.remove();
+            });
+
+            listItem.appendChild(deleteButton);
+            todoList.appendChild(listItem);
+
+            input.value = '';
+        };
+
+        addButton.addEventListener('click', addTask);
+
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addTask();
+            }
+        });
     </script>
-    
 </body>
 </html>
